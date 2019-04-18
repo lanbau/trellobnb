@@ -1,11 +1,18 @@
 const template = document.createElement('template')
 template.innerHTML = `
-  <style></style>
-  <div>
+  <style>
+    .column-form {
+      padding: 30px;
+    }
+    .column-title {
+      font-size:14px;
+    }
+  </style>
+  <div class="column-form">
     <h1>Column Edit Form</h1>
     <div class="column-id"></div>
     <input class="column-title" placeholder="Column Title"/>
-    <button>Modify Column</button>
+    <button class="column-edit-button">Modify Column</button>
   </div>
 `
 
@@ -16,11 +23,15 @@ class ColumnForm extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true))
     this.$columnId = this._shadowRoot.querySelector('.column-id')
     this.$columnTitle = this._shadowRoot.querySelector('.column-title')
+    this.$columnEditButton = this._shadowRoot.querySelector('.column-edit-button')
   }
 
   set data (value) {
     this.$columnId.innerHTML = `Column ${value.id}`
     this.$columnTitle.value = value.title
+    this.$columnEditButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('confirmEditColumn', { detail: {id: value.id, title: this.$columnTitle.value} }))
+    })
   }
 }
 
