@@ -2,9 +2,9 @@ const template = document.createElement('template')
 template.innerHTML = `
   <style>
     .card {
-      background-color:red;
-      width:100px;
-      height:100px;
+      background-color:lightgrey;
+      margin:10px;
+      padding:30px;
     }
   </style>
   <div class="card">

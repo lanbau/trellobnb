@@ -82,12 +82,11 @@ class Container extends HTMLElement {
       columnElement.id = column.id
       columnElement.title = column.title
 
-      columnElement.card = {
-        "id": 5,
-        "title": "Card 5",
-        "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
-        "columnId": 2
-      }
+      cards.forEach(card => {
+        if (card.columnId == column.id) {
+          columnElement.card = card
+        }
+      })
 
       this.$leftContainer.appendChild(columnElement)
     })
