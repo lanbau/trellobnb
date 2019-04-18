@@ -14,6 +14,9 @@ template.innerHTML = `
       display:flex;
       margin-bottom:5px;
     }
+    .card-description {
+      display: none;
+    }
   </style>
   <div class="card">
     <div class="card-header">
@@ -24,6 +27,7 @@ template.innerHTML = `
       </div>
     </div>
     <div class="card-description"></div>
+    <button class="card-description-button">Read Description</button>
   </div>
 `
 
@@ -36,6 +40,7 @@ class Card extends HTMLElement {
     this.$cardDescription = this._shadowRoot.querySelector('.card-description')
     this.$editButton = this._shadowRoot.querySelector('.card-edit-button')
     this.$deleteButton = this._shadowRoot.querySelector('.card-delete-button')
+    this.$cardDescriptionButton = this._shadowRoot.querySelector('.card-description-button')
   }
   set description (value) {
     this.$cardDescription.innerHTML = value
@@ -50,6 +55,9 @@ class Card extends HTMLElement {
     this.$columnId = value
   }
   connectedCallback () {
+    this.$cardDescriptionButton.addEventListener('click', (e) => {
+      this.$cardDescription.style.display = 'block'
+    })
     this.$deleteButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('deleteCard', { detail: this.$cardId }))
     })
