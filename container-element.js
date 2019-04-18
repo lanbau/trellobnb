@@ -45,8 +45,28 @@ class Container extends HTMLElement {
     this.$rightContainer = this._shadowRoot.querySelector('.right-container')
     this.$columns = this._shadowRoot.querySelector('.columns')
     this.$addNewColumnButton = this._shadowRoot.querySelector('.add-new-column-button')
-    this.$addNewColumnButton.addEventListener('click', this.addNewColumn)
+    this.$addNewColumnButton.addEventListener('click', this.addNewColumn.bind(this))
   }
+  async addNewColumn (item) {
+    const columns = await this.fetchColumns()
+    const newColumnId = columns.length + 1
+    const url = 'http://localhost:3000/columns'
+    const data = {id:newColumnId, title: `Column ${newColumnId}` }
+    const that = this
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(function () {
+      that.fetchData()
+    })
+    .catch(error => console.error('Error:', error))
+
+  }
+
   async fetchColumns () {
     const res = await fetch ('http://localhost:3000/columns')
     const json = await res.json()
@@ -60,12 +80,15 @@ class Container extends HTMLElement {
   }
 
   async fetchData () {
+    this.$columns.innerHTML = ''
+    console.log('fetch data')
     const columns = await this.fetchColumns()
     const cards = await this.fetchCards()
     columns.forEach(column => {
       let columnElement = document.createElement('column-element')
       columnElement.id = column.id
       columnElement.title = column.title
+      columnElement.addEventListener('deleteColumn', this.deleteColumn.bind(this))
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card
@@ -79,23 +102,11 @@ class Container extends HTMLElement {
     await this.fetchData()
   }
 
-  async addNewColumn (item) {
-    console.log('add new columns')
-    const res = await fetch ('http://localhost:3000/columns')
-    const columns = await res.json()
-    const newColumnId = columns.length + 1
-    const url = 'http://localhost:3000/columns';
-    const data = {id:newColumnId, title: `Column ${newColumnId}` };
-    fetch(url, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(data), // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
+  deleteColumn (evt) {
+    console.log(evt)
   }
+
+
 }
 
 customElements.define('container-element', Container)

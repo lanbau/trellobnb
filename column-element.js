@@ -13,9 +13,21 @@ template.innerHTML = `
     text-align:center;
     padding:20px;
   }
+  .column-header {
+    padding: 20px;
+    display:flex;
+    justify-content: space-between;
+  }
+  .column-delete-button {
+    width:40px;
+    height:40px;
+  }
   </style>
   <div class="column">
-    <div class="column-title"></div>
+    <div class="column-header">
+      <div class="column-title"></div>
+      <button class="column-delete-button">X</button>
+    </div>
     <div class="column-body"></div>
   </div>
 `
@@ -28,7 +40,16 @@ class Column extends HTMLElement {
     this.$column = this._shadowRoot.querySelector('.column')
     this.$columnTitle = this._shadowRoot.querySelector('.column-title')
     this.$columnBody = this._shadowRoot.querySelector('.column-body')
+    this.$deleteButton = this._shadowRoot.querySelector('.column-delete-button')
   }
+
+  async connectedCallback() {
+    let columnId = parseInt(this.$column.id)
+    this.$deleteButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('deleteColumn', { detail: columnId }))
+    })
+  }
+
   set title (value) {
     this.$columnTitle.innerHTML = value
   }
