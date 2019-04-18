@@ -26,8 +26,12 @@ template.innerHTML = `
     width:40px;
     height:40px;
   }
+  .add-new-card-button {
+    margin:20px;
+  }
   </style>
   <div class="column">
+    <button class="add-new-card-button">Add New Card</button>
     <div class="column-header">
       <div class="column-title"></div>
       <div>

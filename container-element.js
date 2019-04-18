@@ -122,25 +122,17 @@ class Container extends HTMLElement {
   }
 
   confirmEditColumn (evt) {
-    console.log(evt.detail)
     const url = 'http://localhost:3000/columns' + '/' + evt.detail.id.toString()
     const data = { title: evt.detail.title }
-    console.log(data)
     const that = this
-    console.log(url)
     fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
       headers:{
         'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
       }
     })
-    .then( (res) => {
-      console.log(res)
-      that.fetchData()
-    })
+    .then( () => that.fetchData())
     .catch(error => console.error('Error:', error))
   }
 
