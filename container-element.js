@@ -119,6 +119,7 @@ class Container extends HTMLElement {
       columnElement.addEventListener('addNewCard', this.addNewCard.bind(this))
       columnElement.refreshData = this.refreshData.bind(this)
       columnElement.editCardForm = this.editCardForm.bind(this)
+      columnElement.addEventListener('searchColumnCards', this.searchColumnCards.bind(this))
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card
@@ -138,6 +139,18 @@ class Container extends HTMLElement {
     cardForm.data = data
   }
 
+  async searchColumnCards (evt) {
+    const cards = await this.fetchCards()
+    cards.forEach(card => {
+      if (card.columnId == evt.detail.id) {
+        console.log(card)
+        if (card.description.includes(evt.detail.query)) {
+          alert('keyword exists in cards')
+        }
+      }
+    })
+  }
+
   confirmEditCard (evt) {
     const url = 'http://localhost:3000/cards' + '/' + evt.detail.id
     console.log(url)
@@ -146,7 +159,6 @@ class Container extends HTMLElement {
       description: evt.detail.description,
       columnId: evt.detail.columnId
     }
-    console.log(data)
     const that = this
     fetch(url, {
       method: 'PUT',

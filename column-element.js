@@ -29,9 +29,17 @@ template.innerHTML = `
   .add-new-card-button {
     margin:20px;
   }
+  .search {
+    margin-left:20px;
+  }
   </style>
   <div class="column">
     <button class="add-new-card-button">Add New Card</button>
+    <br>
+    <div class="search">
+      <input class="search-input" placeholder="Search" />
+      <button class="search-button">Search</button>
+    </div>
     <div class="column-header">
       <div class="column-title"></div>
       <div>
@@ -54,6 +62,9 @@ class Column extends HTMLElement {
     this.$deleteButton = this._shadowRoot.querySelector('.column-delete-button')
     this.$editButton = this._shadowRoot.querySelector('.column-edit-button')
     this.$addNewCard = this._shadowRoot.querySelector('.add-new-card-button')
+
+    this.$searchInput = this._shadowRoot.querySelector('.search-input')
+    this.$searchButton = this._shadowRoot.querySelector('.search-button')
   }
 
   async connectedCallback() {
@@ -67,6 +78,14 @@ class Column extends HTMLElement {
     })
     this.$addNewCard.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('addNewCard', { detail: columnId }))
+    })
+    this.$searchButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('searchColumnCards', {
+        detail: {
+          id: columnId,
+          query: this.$searchInput.value
+        }
+      }))
     })
   }
 

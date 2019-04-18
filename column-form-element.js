@@ -12,6 +12,7 @@ template.innerHTML = `
     <h1>Column Edit Form</h1>
     <div class="column-id"></div>
     <input class="column-title" placeholder="Column Title"/>
+    <br>
     <button class="column-edit-button">Modify Column</button>
   </div>
 `
