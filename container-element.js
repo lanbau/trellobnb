@@ -117,7 +117,9 @@ class Container extends HTMLElement {
   }
 
   editColumn (evt) {
-    console.log(evt.detail)
+    // Get Column Edit Form
+    const columnForm = this.$rightContainer.querySelector('column-form-element')
+    columnForm.data = evt.detail
   }
 
 
