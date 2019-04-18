@@ -77,9 +77,22 @@ class Column extends HTMLElement {
     this.$column.id = value
   }
 
+
+  deleteCard (evt) {
+    const that = this
+    const url = 'http://localhost:3000/cards'
+    fetch(url + '/' + evt.detail, {
+      method: 'delete'
+    }).then( () =>     this.test() )
+    .catch(error => console.error('Error:', error))
+  }
+
   set card (value) {
     let cardElement = document.createElement('card-element')
     cardElement.description = value.description
+    cardElement.title = value.title
+    cardElement.id = value.id
+    cardElement.addEventListener('deleteCard', this.deleteCard.bind(this))
     this.$columnBody.appendChild(cardElement)
   }
 }

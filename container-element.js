@@ -1,5 +1,6 @@
 import './column-element.js'
 import './column-form-element.js'
+import './card-form-element.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -116,6 +117,7 @@ class Container extends HTMLElement {
       columnElement.addEventListener('deleteColumn', this.deleteColumn.bind(this))
       columnElement.addEventListener('editColumn', this.editColumn.bind(this))
       columnElement.addEventListener('addNewCard', this.addNewCard.bind(this))
+      columnElement.test = this.test.bind(this)
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card
@@ -125,11 +127,16 @@ class Container extends HTMLElement {
     })
   }
 
+  test () {
+    this.fetchData()
+  }
+
   async connectedCallback() {
     await this.fetchData()
-    const form = document.createElement('column-form-element')
-    this.$rightContainer.appendChild(form)
-
+    const columnForm = document.createElement('column-form-element')
+    this.$rightContainer.appendChild(columnForm)
+    const cardForm = document.createElement('card-form-element')
+    this.$rightContainer.appendChild(cardForm)
   }
 
   deleteColumn (evt) {
