@@ -1,3 +1,5 @@
+import './column-element.js'
+
 const template = document.createElement('template')
 template.innerHTML = `
   <style>
@@ -22,7 +24,16 @@ template.innerHTML = `
     <div class="right-container"></div>
   </div>
 `
-
+const columns = [
+  {
+    "id": 1,
+    "title": "Column 1"
+  },
+  {
+    "id": 2,
+    "title": "Column 2"
+  }
+]
 class Container extends HTMLElement {
   constructor () {
     super()
@@ -32,7 +43,15 @@ class Container extends HTMLElement {
     this.$leftContainer = this._shadowRoot.querySelector('.left-container')
     this.$rightContainer = this._shadowRoot.querySelector('.right-container')
 
+    columns.forEach(column => {
+      let columnElement = document.createElement('column-element')
+      columnElement.id = column.id
+      columnElement.title = column.title
+      this.$leftContainer.appendChild(columnElement)
+    })
   }
+
+
 }
 
 customElements.define('container-element', Container)
