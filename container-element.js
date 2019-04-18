@@ -81,7 +81,6 @@ class Container extends HTMLElement {
 
   async fetchData () {
     this.$columns.innerHTML = ''
-    console.log('fetch data')
     const columns = await this.fetchColumns()
     const cards = await this.fetchCards()
     columns.forEach(column => {
@@ -103,7 +102,12 @@ class Container extends HTMLElement {
   }
 
   deleteColumn (evt) {
-    console.log(evt)
+    const that = this
+    const url = 'http://localhost:3000/columns'
+    fetch(url + '/' + evt.detail, {
+      method: 'delete'
+    }).then( () => that.fetchData() )
+    .catch(error => console.error('Error:', error))
   }
 
 
