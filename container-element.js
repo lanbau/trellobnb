@@ -58,7 +58,6 @@ class Container extends HTMLElement {
       description: 'Quisque et pellentesque sem.',
       columnId
     }
-    console.log(data)
     const that = this
     fetch(url, {
       method: 'POST',

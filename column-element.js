@@ -62,9 +62,37 @@ class Column extends HTMLElement {
     this.$deleteButton = this._shadowRoot.querySelector('.column-delete-button')
     this.$editButton = this._shadowRoot.querySelector('.column-edit-button')
     this.$addNewCard = this._shadowRoot.querySelector('.add-new-card-button')
-
     this.$searchInput = this._shadowRoot.querySelector('.search-input')
     this.$searchButton = this._shadowRoot.querySelector('.search-button')
+
+    this.$column = this._shadowRoot.querySelector('.column')
+    this.$column.addEventListener('drop', this.onDrop.bind(this))
+    this.$column.addEventListener('dragover', this.onDragover.bind(this))
+
+  }
+  onDrop (event) {
+    event.preventDefault()
+    const columnDropId = this.$column.id
+    var dragData = event.dataTransfer.getData("Text")
+    let evt = JSON.parse(dragData)
+    const url = 'http://localhost:3000/cards' + '/' + evt.id
+    const data = {
+      title: evt.title,
+      description: evt.description,
+      columnId: columnDropId
+    }
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .then( () => this.refreshData())
+    .catch(error => console.error('Error:', error))
+  }
+  onDragover (event) {
+    event.preventDefault();
   }
 
   async connectedCallback() {

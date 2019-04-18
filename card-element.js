@@ -18,7 +18,7 @@ template.innerHTML = `
       display: none;
     }
   </style>
-  <div class="card">
+  <div class="card" draggable="true" id="dragtarget">
     <div class="card-header">
       <div class="card-title"></div>
       <div class="card-actions">
@@ -41,6 +41,23 @@ class Card extends HTMLElement {
     this.$editButton = this._shadowRoot.querySelector('.card-edit-button')
     this.$deleteButton = this._shadowRoot.querySelector('.card-delete-button')
     this.$cardDescriptionButton = this._shadowRoot.querySelector('.card-description-button')
+
+    this.$card = this._shadowRoot.querySelector('#dragtarget')
+    this.$card.addEventListener('dragstart', this.onDragStart.bind(this))
+    this.$card.addEventListener('dragend',  this.onDragEnd.bind(this))
+  }
+  onDragStart (event) {
+    console.log(event.target.id)
+    event.dataTransfer.setData("Text", JSON.stringify({
+      id: this.$cardId,
+      columnId: this.$columnId,
+      description: this.$cardDescription.innerText,
+      title: this.$cardTitle.innerText
+    }))
+  }
+
+  onDragEnd (event) {
+    console.log('drag finished')
   }
   set description (value) {
     this.$cardDescription.innerHTML = value
