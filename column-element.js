@@ -1,6 +1,12 @@
 const template = document.createElement('template')
 template.innerHTML = `
-  <style></style>
+  <style>
+  .column {
+    background-color:white;
+    width:300px;
+    height:500px;
+  }
+  </style>
   <div class="column"></div>
 `
 

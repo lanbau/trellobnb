@@ -19,7 +19,6 @@ template.innerHTML = `
   </style>
   <div class="main-container">
     <div class="left-container">
-      <button>Add Column</button>
     </div>
     <div class="right-container"></div>
   </div>
