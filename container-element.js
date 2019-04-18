@@ -1,4 +1,5 @@
 import './column-element.js'
+import './column-form-element.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -88,6 +89,7 @@ class Container extends HTMLElement {
       columnElement.id = column.id
       columnElement.title = column.title
       columnElement.addEventListener('deleteColumn', this.deleteColumn.bind(this))
+      columnElement.addEventListener('editColumn', this.editColumn.bind(this))
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card
@@ -99,6 +101,10 @@ class Container extends HTMLElement {
 
   async connectedCallback() {
     await this.fetchData()
+
+    const form = document.createElement('column-form-element')
+    this.$rightContainer.appendChild(form)
+
   }
 
   deleteColumn (evt) {
@@ -108,6 +114,10 @@ class Container extends HTMLElement {
       method: 'delete'
     }).then( () => that.fetchData() )
     .catch(error => console.error('Error:', error))
+  }
+
+  editColumn (evt) {
+    console.log(evt.detail)
   }
 
 

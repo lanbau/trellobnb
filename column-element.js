@@ -22,11 +22,18 @@ template.innerHTML = `
     width:40px;
     height:40px;
   }
+  .column-edit-button {
+    width:40px;
+    height:40px;
+  }
   </style>
   <div class="column">
     <div class="column-header">
       <div class="column-title"></div>
-      <button class="column-delete-button">X</button>
+      <div>
+        <button class="column-edit-button">Edit</button>
+        <button class="column-delete-button">X</button>
+      </div>
     </div>
     <div class="column-body"></div>
   </div>
@@ -40,13 +47,20 @@ class Column extends HTMLElement {
     this.$column = this._shadowRoot.querySelector('.column')
     this.$columnTitle = this._shadowRoot.querySelector('.column-title')
     this.$columnBody = this._shadowRoot.querySelector('.column-body')
+
     this.$deleteButton = this._shadowRoot.querySelector('.column-delete-button')
+
+    this.$editButton = this._shadowRoot.querySelector('.column-edit-button')
+    
   }
 
   async connectedCallback() {
     let columnId = parseInt(this.$column.id)
     this.$deleteButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('deleteColumn', { detail: columnId }))
+    })
+    this.$editButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('editColumn', { detail: columnId }))
     })
   }
 
