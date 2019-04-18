@@ -117,7 +117,8 @@ class Container extends HTMLElement {
       columnElement.addEventListener('deleteColumn', this.deleteColumn.bind(this))
       columnElement.addEventListener('editColumn', this.editColumn.bind(this))
       columnElement.addEventListener('addNewCard', this.addNewCard.bind(this))
-      columnElement.test = this.test.bind(this)
+      columnElement.refreshData = this.refreshData.bind(this)
+      columnElement.editCardForm = this.editCardForm.bind(this)
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card
@@ -127,8 +128,35 @@ class Container extends HTMLElement {
     })
   }
 
-  test () {
+  refreshData () {
     this.fetchData()
+  }
+
+  editCardForm (data) {
+    const cardForm = this.$rightContainer.querySelector('card-form-element')
+    cardForm.addEventListener('confirmEditCard', this.confirmEditCard.bind(this))
+    cardForm.data = data
+  }
+
+  confirmEditCard (evt) {
+    const url = 'http://localhost:3000/cards' + '/' + evt.detail.id
+    console.log(url)
+    const data = {
+      title: evt.detail.title,
+      description: evt.detail.description,
+      columnId: evt.detail.columnId
+    }
+    console.log(data)
+    const that = this
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .then( () => that.fetchData())
+    .catch(error => console.error('Error:', error))
   }
 
   async connectedCallback() {

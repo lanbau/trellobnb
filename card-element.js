@@ -46,9 +46,22 @@ class Card extends HTMLElement {
   set id (value) {
     this.$cardId = value
   }
+  set columnId (value) {
+    this.$columnId = value
+  }
   connectedCallback () {
     this.$deleteButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('deleteCard', { detail: this.$cardId }))
+    })
+    this.$editButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('editCard', {
+        detail: {
+          id:this.$cardId,
+          title: this.$cardTitle.innerText,
+          description: this.$cardDescription.innerText,
+          columnId: this.$columnId
+        }
+      }))
     })
   }
 }

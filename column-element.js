@@ -6,7 +6,7 @@ template.innerHTML = `
   .column {
     background-color:white;
     width:300px;
-    height:500px;
+    height:800px;
     margin:30px;
   }
   .column-title {
@@ -77,14 +77,17 @@ class Column extends HTMLElement {
     this.$column.id = value
   }
 
-
   deleteCard (evt) {
     const that = this
     const url = 'http://localhost:3000/cards'
     fetch(url + '/' + evt.detail, {
       method: 'delete'
-    }).then( () =>     this.test() )
+    }).then( () => this.refreshData() )
     .catch(error => console.error('Error:', error))
+  }
+
+  editCard (evt) {
+    this.editCardForm(evt.detail)
   }
 
   set card (value) {
@@ -92,7 +95,9 @@ class Column extends HTMLElement {
     cardElement.description = value.description
     cardElement.title = value.title
     cardElement.id = value.id
+    cardElement.columnId = value.columnId
     cardElement.addEventListener('deleteCard', this.deleteCard.bind(this))
+    cardElement.addEventListener('editCard', this.editCard.bind(this))
     this.$columnBody.appendChild(cardElement)
   }
 }

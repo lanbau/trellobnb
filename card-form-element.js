@@ -13,7 +13,7 @@ template.innerHTML = `
   </style>
   <div class="card-form">
     <h1>Card Edit Form</h1>
-    <div class="card-id"></div>
+    Card Id: <div class="card-id"></div>
     <input class="card-title" placeholder="Card Title"/>
     <br>
     <textarea class="card-description" placeholder="Card Description"></textarea>
@@ -29,11 +29,30 @@ class CardForm extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true))
     this.$cardId = this._shadowRoot.querySelector('.card-id')
     this.$cardTitle = this._shadowRoot.querySelector('.card-title')
+    this.$cardDescription = this._shadowRoot.querySelector('.card-description')
     this.$cardEditButton = this._shadowRoot.querySelector('.card-edit-button')
   }
 
   set data (value) {
+    console.log(value)
+    this.$cardId.innerHTML = value.id
+    this.$cardTitle.value = value.title
+    this.$cardDescription.value = value.description
+    this.$cardColumnId = value.columnId
 
+  }
+
+  connectedCallback () {
+    this.$cardEditButton.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('confirmEditCard', {
+        detail: {
+          id:this.$cardId.innerText,
+          title: this.$cardTitle.value,
+          description: this.$cardDescription.value,
+          columnId: this.$cardColumnId
+        }
+      }))
+    })
   }
 }
 
