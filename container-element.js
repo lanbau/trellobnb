@@ -48,6 +48,32 @@ class Container extends HTMLElement {
     this.$addNewColumnButton = this._shadowRoot.querySelector('.add-new-column-button')
     this.$addNewColumnButton.addEventListener('click', this.addNewColumn.bind(this))
   }
+
+  async addNewCard (evt) {
+    const columnId = evt.detail
+    const url = 'http://localhost:3000/cards'
+    const data = {
+      title: 'New Card',
+      description: 'Quisque et pellentesque sem.',
+      columnId
+    }
+    console.log(data)
+    const that = this
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(function () {
+      that.fetchData()
+    })
+    .catch(error => console.error('Error:', error))
+
+  }
+
+
   async addNewColumn (item) {
     const columns = await this.fetchColumns()
     const newColumnId = columns.length + 1
@@ -65,7 +91,6 @@ class Container extends HTMLElement {
       that.fetchData()
     })
     .catch(error => console.error('Error:', error))
-
   }
 
   async fetchColumns () {
@@ -90,6 +115,7 @@ class Container extends HTMLElement {
       columnElement.title = column.title
       columnElement.addEventListener('deleteColumn', this.deleteColumn.bind(this))
       columnElement.addEventListener('editColumn', this.editColumn.bind(this))
+      columnElement.addEventListener('addNewCard', this.addNewCard.bind(this))
       cards.forEach(card => {
         if (card.columnId == column.id) {
           columnElement.card = card

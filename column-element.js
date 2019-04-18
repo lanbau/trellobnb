@@ -51,11 +51,9 @@ class Column extends HTMLElement {
     this.$column = this._shadowRoot.querySelector('.column')
     this.$columnTitle = this._shadowRoot.querySelector('.column-title')
     this.$columnBody = this._shadowRoot.querySelector('.column-body')
-
     this.$deleteButton = this._shadowRoot.querySelector('.column-delete-button')
-
     this.$editButton = this._shadowRoot.querySelector('.column-edit-button')
-
+    this.$addNewCard = this._shadowRoot.querySelector('.add-new-card-button')
   }
 
   async connectedCallback() {
@@ -66,6 +64,9 @@ class Column extends HTMLElement {
     })
     this.$editButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('editColumn', { detail: {id: columnId, title: columnTitle} }))
+    })
+    this.$addNewCard.addEventListener('click', (e) => {
+      this.dispatchEvent(new CustomEvent('addNewCard', { detail: columnId }))
     })
   }
 
