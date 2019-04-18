@@ -34,18 +34,20 @@ class Container extends HTMLElement {
     this.$leftContainer = this._shadowRoot.querySelector('.left-container')
     this.$rightContainer = this._shadowRoot.querySelector('.right-container')
   }
+
   async fetchColumns () {
     const res = await fetch ('http://localhost:3000/columns')
     const json = await res.json()
     return json
   }
+
   async fetchCards () {
     const res = await fetch ('http://localhost:3000/cards')
     const json = await res.json()
     return json
   }
 
-  async connectedCallback() {
+  async fetchData () {
     const columns = await this.fetchColumns()
     const cards = await this.fetchCards()
 
@@ -63,6 +65,11 @@ class Container extends HTMLElement {
       this.$leftContainer.appendChild(columnElement)
     })
   }
+
+  async connectedCallback() {
+    await this.fetchData()
+  }
+
 }
 
 customElements.define('container-element', Container)
