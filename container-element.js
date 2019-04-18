@@ -81,6 +81,14 @@ class Container extends HTMLElement {
       let columnElement = document.createElement('column-element')
       columnElement.id = column.id
       columnElement.title = column.title
+
+      columnElement.card = {
+        "id": 5,
+        "title": "Card 5",
+        "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
+        "columnId": 2
+      }
+
       this.$leftContainer.appendChild(columnElement)
     })
   }

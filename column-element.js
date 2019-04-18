@@ -1,3 +1,5 @@
+import './card-element.js'
+
 const template = document.createElement('template')
 template.innerHTML = `
   <style>
@@ -32,6 +34,12 @@ class Column extends HTMLElement {
   }
   set id (value) {
     this.$column.id = value
+  }
+
+  set card (value) {
+    let cardElement = document.createElement('card-element')
+    cardElement.description = value.description
+    this.$columnBody.appendChild(cardElement)
   }
 }
 
