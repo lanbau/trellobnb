@@ -14,13 +14,9 @@ template.innerHTML = `
       background-color: lightgrey;
     }
   </style>
-  <div class="container">
-    <div class="three-quarters">
-      3/4
-    </div>
-    <div class="one-quarter">
-      1/4
-    </div>
+  <div class="main-container">
+    <div class="left-container"></div>
+    <div class="right-container"></div>
   </div>
 `
 
@@ -29,8 +25,9 @@ class Container extends HTMLElement {
     super()
     this._shadowRoot = this.attachShadow({ 'mode': 'open' })
     this._shadowRoot.appendChild(template.content.cloneNode(true))
-    this.$container = this._shadowRoot.querySelector('.container')
-    console.log(this.$container)
+    this.$mainContainer = this._shadowRoot.querySelector('.main-container')
+    this.$leftContainer = this._shadowRoot.querySelector('.left-container')
+    this.$rightContainer = this._shadowRoot.querySelector('.right-container')
   }
 }
 
