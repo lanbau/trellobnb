@@ -5,12 +5,14 @@ template.innerHTML = `
   <style>
     .main-container {
       display: flex;
-      height:100vh;
+      background-color: teal;
     }
     .left-container {
       width: 75%;
       background-color: teal;
       padding: 30px;
+      display:flex;
+      flex-wrap: wrap;
     }
     .right-container {
       width: 25%;
@@ -18,8 +20,7 @@ template.innerHTML = `
     }
   </style>
   <div class="main-container">
-    <div class="left-container">
-    </div>
+    <div class="left-container"></div>
     <div class="right-container"></div>
   </div>
 `
