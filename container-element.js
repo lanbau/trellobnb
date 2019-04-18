@@ -24,49 +24,6 @@ template.innerHTML = `
     <div class="right-container"></div>
   </div>
 `
-const columns = [
-  {
-    "id": 1,
-    "title": "Column 1"
-  },
-  {
-    "id": 2,
-    "title": "Column 2"
-  }
-]
-
-const cards = [
-  {
-    "id": 1,
-    "title": "Card 1",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "columnId": 1
-  },
-  {
-    "id": 2,
-    "title": "Card 2",
-    "description": "Quisque et pellentesque sem.",
-    "columnId": 1
-  },
-  {
-    "id": 3,
-    "title": "Card 3",
-    "description": "Nulla porttitor erat a sollicitudin volutpat.",
-    "columnId": 1
-  },
-  {
-    "id": 4,
-    "title": "Card 4",
-    "description": "Quisque id scelerisque felis, sit amet scelerisque nunc.",
-    "columnId": 2
-  },
-  {
-    "id": 5,
-    "title": "Card 5",
-    "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
-    "columnId": 2
-  }
-]
 
 class Container extends HTMLElement {
   constructor () {
@@ -76,6 +33,21 @@ class Container extends HTMLElement {
     this.$mainContainer = this._shadowRoot.querySelector('.main-container')
     this.$leftContainer = this._shadowRoot.querySelector('.left-container')
     this.$rightContainer = this._shadowRoot.querySelector('.right-container')
+  }
+  async fetchColumns () {
+    const res = await fetch ('http://localhost:3000/columns')
+    const json = await res.json()
+    return json
+  }
+  async fetchCards () {
+    const res = await fetch ('http://localhost:3000/cards')
+    const json = await res.json()
+    return json
+  }
+
+  async connectedCallback() {
+    const columns = await this.fetchColumns()
+    const cards = await this.fetchCards()
 
     columns.forEach(column => {
       let columnElement = document.createElement('column-element')
@@ -91,8 +63,6 @@ class Container extends HTMLElement {
       this.$leftContainer.appendChild(columnElement)
     })
   }
-
-
 }
 
 customElements.define('container-element', Container)
