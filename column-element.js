@@ -95,11 +95,15 @@ class Column extends HTMLElement {
     event.preventDefault();
   }
 
+  deleteColumnEvent (columnId) {
+    this.dispatchEvent(new CustomEvent('deleteColumn', { detail: columnId }))
+  }
+
   async connectedCallback() {
     let columnTitle = this.$columnTitle.innerText
     let columnId = parseInt(this.$column.id)
     this.$deleteButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('deleteColumn', { detail: columnId }))
+      this.deleteColumnEvent(columnId)
     })
     this.$editButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('editColumn', { detail: {id: columnId, title: columnTitle} }))

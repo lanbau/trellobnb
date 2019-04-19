@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>card-element test</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="../column-element.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <column-element></column-element>
+      </template>
+    </test-fixture>
+
+
+    <script type="module">
+      suite('card-form-element', () => {
+        test('instantiating the element with default properties works', () => {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementTitle = elementShadowRoot.querySelector('.column-title')
+          const elementBody = elementShadowRoot.querySelector('.column-body')
+          assert.equal(elementTitle.innerHTML, '')
+          assert.equal(elementBody.innerHTML, '')
+          const elementEditButton = elementShadowRoot.querySelector('.column-edit-button')
+          assert.equal(elementEditButton.innerHTML, 'Edit')
+          const elementDeleteButton = elementShadowRoot.querySelector('.column-delete-button')
+          assert.equal(elementDeleteButton.innerHTML, 'X')
+          const elementAddCardButton = elementShadowRoot.querySelector('.add-new-card-button')
+          assert.equal(elementAddCardButton.innerHTML, 'Add New Card')
+
+          const elementSearchInput = elementShadowRoot.querySelector('.search-input')
+          assert.equal(elementSearchInput.value, '')
+          const elementSearchButton = elementShadowRoot.querySelector('.search-button')
+          assert.equal(elementSearchButton.innerHTML, 'Search')
+
+
+        })
+
+        test('Delete Column Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          element.id = 1
+          element.addEventListener('deleteColumn', function(event) {
+            assert.equal(event.detail, 1)
+            done()
+          })
+          element.deleteColumnEvent()
+        })
+      })
+
+    </script>
+
+  </body>
+</html>

@@ -152,7 +152,6 @@ class Container extends HTMLElement {
 
   confirmEditCard (evt) {
     const url = 'http://localhost:3000/cards' + '/' + evt.detail.id
-    console.log(url)
     const data = {
       title: evt.detail.title,
       description: evt.detail.description,

@@ -34,24 +34,26 @@ class CardForm extends HTMLElement {
   }
 
   set data (value) {
-    console.log(value)
     this.$cardId.innerHTML = value.id
     this.$cardTitle.value = value.title
     this.$cardDescription.value = value.description
     this.$cardColumnId = value.columnId
+  }
 
+  confirmEditCardEvent () {
+    this.dispatchEvent(new CustomEvent('confirmEditCard', {
+      detail: {
+        id: parseInt(this.$cardId.innerHTML),
+        title: this.$cardTitle.value,
+        description: this.$cardDescription.value,
+        columnId: this.$cardColumnId
+      }
+    }))
   }
 
   connectedCallback () {
     this.$cardEditButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('confirmEditCard', {
-        detail: {
-          id:this.$cardId.innerText,
-          title: this.$cardTitle.value,
-          description: this.$cardDescription.value,
-          columnId: this.$cardColumnId
-        }
-      }))
+      this.confirmEditCardEvent()
     })
   }
 }
