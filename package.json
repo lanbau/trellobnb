@@ -4,7 +4,8 @@
   "description": "",
   "main": "card-element.js",
   "scripts": {
-    "test": "mocha"
+    "test": "polymer test -l chrome -p",
+    "dev": "lite-server"
   },
   "keywords": [],
   "author": "",
