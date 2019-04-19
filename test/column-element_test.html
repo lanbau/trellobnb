@@ -38,25 +38,23 @@
           assert.equal(elementDeleteButton.innerHTML, 'X')
           const elementAddCardButton = elementShadowRoot.querySelector('.add-new-card-button')
           assert.equal(elementAddCardButton.innerHTML, 'Add New Card')
-
           const elementSearchInput = elementShadowRoot.querySelector('.search-input')
           assert.equal(elementSearchInput.value, '')
           const elementSearchButton = elementShadowRoot.querySelector('.search-button')
           assert.equal(elementSearchButton.innerHTML, 'Search')
-
-
         })
 
         test('Delete Column Event', function(done) {
           const element = fixture('BasicTestFixture')
           const elementShadowRoot = element.shadowRoot
-          element.id = 1
           element.addEventListener('deleteColumn', function(event) {
             assert.equal(event.detail, 1)
             done()
           })
-          element.deleteColumnEvent()
+          element.deleteColumnEvent(1)
         })
+
+        
       })
 
     </script>
