@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>iron ajax test</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script type="module">
+      import '@polymer/iron-ajax/iron-ajax.js';
+    </script>
+  </head>
+  <body>
+    <!-- create test fixture template -->
+    <test-fixture id="simple-get">
+      <template>
+        <iron-ajax url="/responds_to_get_with_json"></iron-ajax>
+      </template>
+    </test-fixture>
+    <script>
+      suite('<iron-ajax>', function() {
+        var ajax;
+        var request;
+        var server;
+        var responseHeaders = {
+          json: { 'Content-Type': 'application/json' }
+        };
+        setup(function() {
+          server = sinon.fakeServer.create();
+          server.respondWith(
+            'GET',
+            /\/responds_to_get_with_json.*/, [
+              200,
+              responseHeaders.json,
+              '{"success":true}'
+            ]
+          );
+        });
+        teardown(function() {
+          server.restore();
+        });
+        suite('when making simple GET requests for JSON', function() {
+          setup(function() {
+            // get fresh instance of iron-ajax before every test
+            ajax = fixture('simple-get');
+          });
+          test('has sane defaults that love you', function() {
+            request = ajax.generateRequest();
+            server.respond();
+            expect(request.response).to.be.ok;
+            expect(request.response).to.be.an('object');
+            expect(request.response.success).to.be.equal(true);
+          });
+          test('has the correct xhr method', function() {
+            request = ajax.generateRequest();
+            expect(request.xhr.method).to.be.equal('GET');
+          });
+        });
+      });
+    </script>
+
+  </body>
+</html>

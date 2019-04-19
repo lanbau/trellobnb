@@ -21,9 +21,11 @@
     "wct-mocha": "^1.0.0"
   },
   "dependencies": {
+    "@polymer/iron-ajax": "^3.0.1",
+    "@polymer/polymer": "^3.0.0",
     "chai": "^4.2.0",
     "chromedriver": "^73.0.0",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "@polymer/polymer": "^3.0.0"
+    "sinon": "^7.3.2"
   }
 }
