@@ -10,24 +10,17 @@
 ## Installation of project
 1. clone this repo
 2. npm install
+3. npm run dev
 
-## Install & Run Local Server
-npm install http-server -g
-Type the following in terminal to spin up server.
+# Tests (Required)
 ```
-http-server
-```
-
-# Tests
-1. npm install -g web-component-tester
-2. bower install Polymer/web-component-tester --save
-- install polymer cli
-```
+npm install -g web-component-tester
+bower install Polymer/web-component-tester --save
 yarn global add polymer-cli
 ```
 - Run tests on chrome only
 ```
-polymer test -l chrome
+npm run test
 ```
 
 ## Test Strategy
