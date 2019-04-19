@@ -62,6 +62,11 @@ export default class Card extends HTMLElement {
   set description (value) {
     this.$cardDescription.innerHTML = value
   }
+
+  get description () {
+    return this.$cardDescription.innerHTML
+  }
+
   set title (value) {
     this.$cardTitle.innerHTML = value
   }
@@ -71,12 +76,17 @@ export default class Card extends HTMLElement {
   set columnId (value) {
     this.$columnId = value
   }
+
+  deleteCardEvent () {
+    this.dispatchEvent(new CustomEvent('deleteCard', { detail: this.$cardId }))
+  }
+
   connectedCallback () {
     this.$cardDescriptionButton.addEventListener('click', (e) => {
       this.$cardDescription.style.display = 'block'
     })
     this.$deleteButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('deleteCard', { detail: this.$cardId }))
+      this.deleteCardEvent()
     })
     this.$editButton.addEventListener('click', (e) => {
       this.dispatchEvent(new CustomEvent('editCard', {

@@ -27,14 +27,42 @@
       suite('card-element', () => {
 
         test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('.card-edit-button');
-          assert.equal(elementHeader.innerHTML, 'Edit');
-        });
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementEditButton = elementShadowRoot.querySelector('.card-edit-button')
+          assert.equal(elementEditButton.innerHTML, 'Edit')
+          const elementDeleteButton = elementShadowRoot.querySelector('.card-delete-button')
+          assert.equal(elementDeleteButton.innerHTML, 'X')
+          const elementDescriptionButton = elementShadowRoot.querySelector('.card-description-button')
+          assert.equal(elementDescriptionButton.innerHTML, 'Read Description')
+        })
+
+        test('instantiating the element with variable properties works', () => {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementTitle = elementShadowRoot.querySelector('.card-title')
+          const elementDescription = elementShadowRoot.querySelector('.card-description')
+          element.title = "Card Title"
+          element.description = "Card Description"
+          assert.equal(elementTitle.innerHTML, "Card Title")
+          assert.equal(elementDescription.innerHTML, "Card Description")
+        })
+
+        test('fires an event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementDeleteButton = elementShadowRoot.querySelector('.card-delete-button')
+          element.id = 1
+          element.addEventListener('deleteCard', function(event) {
+            assert.equal(event.detail, 1)
+            done()
+          })
+          element.deleteCardEvent()
+        })
 
 
-      });
+      })
+
     </script>
 
   </body>
