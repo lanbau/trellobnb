@@ -31,7 +31,7 @@ template.innerHTML = `
   </div>
 `
 
-class Card extends HTMLElement {
+export default class Card extends HTMLElement {
   constructor () {
     super()
     this._shadowRoot = this.attachShadow({ 'mode': 'open' })
