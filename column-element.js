@@ -99,6 +99,23 @@ class Column extends HTMLElement {
     this.dispatchEvent(new CustomEvent('deleteColumn', { detail: columnId }))
   }
 
+  editColumnEvent (columnId, columnTitle) {
+    this.dispatchEvent(new CustomEvent('editColumn', { detail: {id: columnId, title: columnTitle} }))
+  }
+
+  addNewCardEvent (columnId) {
+    this.dispatchEvent(new CustomEvent('addNewCard', { detail: columnId }))
+  }
+
+  searchColumnCardsEvent (columnId) {
+    this.dispatchEvent(new CustomEvent('searchColumnCards', {
+      detail: {
+        id: columnId,
+        query: this.$searchInput.value
+      }
+    }))
+  }
+
   async connectedCallback() {
     let columnTitle = this.$columnTitle.innerText
     let columnId = parseInt(this.$column.id)
@@ -106,18 +123,13 @@ class Column extends HTMLElement {
       this.deleteColumnEvent(columnId)
     })
     this.$editButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('editColumn', { detail: {id: columnId, title: columnTitle} }))
+      this.editColumnEvent(columnId, columnTitle)
     })
     this.$addNewCard.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('addNewCard', { detail: columnId }))
+      this.addNewCardEvent(columnId)
     })
     this.$searchButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('searchColumnCards', {
-        detail: {
-          id: columnId,
-          query: this.$searchInput.value
-        }
-      }))
+      this.searchColumnCardsEvent(columnId)
     })
   }
 

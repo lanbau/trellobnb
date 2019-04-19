@@ -54,9 +54,53 @@
           element.deleteColumnEvent(1)
         })
 
-        
-      })
+        test('Edit Column Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          element.addEventListener('editColumn', function(event) {
+            expect(event.detail).to.deep.equal({
+              id: 1,
+              title: 'Column Title'
+            })
+            done()
+          })
+          element.editColumnEvent(1, 'Column Title')
+        })
 
+        test('Add New Card Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          element.addEventListener('addNewCard', function(event) {
+            assert.equal(event.detail, 1)
+            done()
+          })
+          element.addNewCardEvent(1)
+        })
+
+        test('Add New Card Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          element.addEventListener('addNewCard', function(event) {
+            assert.equal(event.detail, 1)
+            done()
+          })
+          element.addNewCardEvent(1)
+        })
+
+        test('Search Column Cards Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          elementShadowRoot.querySelector('.search-input').value = 'Search Query'
+          element.addEventListener('searchColumnCards', function(event) {
+            expect(event.detail).to.deep.equal({
+              id: 1,
+              query: 'Search Query'
+            })
+            done()
+          })
+          element.searchColumnCardsEvent(1)
+        })
+      })
     </script>
 
   </body>
