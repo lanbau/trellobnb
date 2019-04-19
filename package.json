@@ -12,8 +12,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "babel-jest": "^24.7.1",
-    "jest": "^24.7.1",
     "mocha": "^5.2.0",
     "web-component-tester": "^6.9.2",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
