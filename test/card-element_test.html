@@ -48,7 +48,7 @@
           assert.equal(elementDescription.innerHTML, "Card Description")
         })
 
-        test('fires an event', function(done) {
+        test('Delete Card Event', function(done) {
           const element = fixture('BasicTestFixture')
           const elementShadowRoot = element.shadowRoot
           const elementDeleteButton = elementShadowRoot.querySelector('.card-delete-button')
@@ -58,6 +58,26 @@
             done()
           })
           element.deleteCardEvent()
+        })
+
+        test('Edit Card Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementDeleteButton = elementShadowRoot.querySelector('.card-delete-button')
+          element.id = 1
+          element.title = 'Card Title New'
+          element.description = 'Card Description New'
+          element.columnId = 2
+          element.addEventListener('editCard', function(event) {
+            expect(event.detail).to.deep.equal({
+              id: 1,
+              title: 'Card Title New',
+              description: 'Card Description New',
+              columnId: 2
+            })
+            done()
+          })
+          element.editCardEvent()
         })
 
 

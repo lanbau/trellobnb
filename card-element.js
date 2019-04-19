@@ -81,6 +81,17 @@ export default class Card extends HTMLElement {
     this.dispatchEvent(new CustomEvent('deleteCard', { detail: this.$cardId }))
   }
 
+  editCardEvent () {
+    this.dispatchEvent(new CustomEvent('editCard', {
+      detail: {
+        id:this.$cardId,
+        title: this.$cardTitle.innerText,
+        description: this.$cardDescription.innerText,
+        columnId: this.$columnId
+      }
+    }))
+  }
+
   connectedCallback () {
     this.$cardDescriptionButton.addEventListener('click', (e) => {
       this.$cardDescription.style.display = 'block'
@@ -89,14 +100,7 @@ export default class Card extends HTMLElement {
       this.deleteCardEvent()
     })
     this.$editButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('editCard', {
-        detail: {
-          id:this.$cardId,
-          title: this.$cardTitle.innerText,
-          description: this.$cardDescription.innerText,
-          columnId: this.$columnId
-        }
-      }))
+      this.editCardEvent()
     })
   }
 }
