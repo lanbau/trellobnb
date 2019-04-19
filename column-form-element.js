@@ -27,11 +27,20 @@ class ColumnForm extends HTMLElement {
     this.$columnEditButton = this._shadowRoot.querySelector('.column-edit-button')
   }
 
+  confirmEditColumn (value) {
+    this.dispatchEvent(new CustomEvent('confirmEditColumn', {
+      detail: {
+        id: value.id,
+        title: this.$columnTitle.value}
+      }
+    ))
+  }
+
   set data (value) {
     this.$columnId.innerHTML = `Column ${value.id}`
     this.$columnTitle.value = value.title
     this.$columnEditButton.addEventListener('click', (e) => {
-      this.dispatchEvent(new CustomEvent('confirmEditColumn', { detail: {id: value.id, title: this.$columnTitle.value} }))
+      this.confirmEditColumn(value)
     })
   }
 }

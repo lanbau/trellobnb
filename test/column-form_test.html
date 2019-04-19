@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>card-element test</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="../column-form-element.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <column-form-element></column-form-element>
+      </template>
+    </test-fixture>
+
+
+    <script type="module">
+      suite('column-form-element', () => {
+        test('instantiating the element with default properties works', () => {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          const elementId = elementShadowRoot.querySelector('.column-id')
+          const elementInput = elementShadowRoot.querySelector('.column-title')
+          assert.equal(elementId.innerHTML, '')
+          assert.equal(elementInput.value, '')
+          const elementEditButton = elementShadowRoot.querySelector('.column-edit-button')
+          assert.equal(elementEditButton.innerHTML, 'Modify Column')
+        })
+
+        test('Confirm Edit Column Event', function(done) {
+          const element = fixture('BasicTestFixture')
+          const elementShadowRoot = element.shadowRoot
+          element.data = {
+            title: 'Column Title'
+          }
+          element.addEventListener('confirmEditColumn', function(event) {
+            console.log(JSON.stringify(event.detail))
+            expect(event.detail).to.deep.equal({
+              id: 1,
+              title: 'Column Title'
+            })
+            done()
+          })
+          element.confirmEditColumn({id: 1})
+        })
+      })
+
+    </script>
+
+  </body>
+</html>
