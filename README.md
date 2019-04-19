@@ -1,23 +1,30 @@
 # Trellobnb
 
-# Quick Start
-## Preinstallation For Polymer Test Suite
-1. npm install -g web-component-tester
-2. bower install Polymer/web-component-tester --save
-3. npm install http-server -g
+# Structure & General Idea
+- Container Element Contains Column Elements
+- Container Elements Contains Card Elements
+- Modify Card/Column Events Will Be Done On Separate Forms
+- Drag & Drop is Data Driven: When card is dropped onto column target, previous and next columns are updated with data (no removal of dom nodes)
 
-## Installation
+# Quick Start
+## Installation of project
 1. clone this repo
 2. npm install
 
-## Run
+## Install & Run Local Server
+npm install http-server -g
 Type the following in terminal to spin up server.
 ```
 http-server
 ```
 
 # Tests
+1. npm install -g web-component-tester
+2. bower install Polymer/web-component-tester --save
 - install polymer cli
+```
+yarn global add polymer-cli
+```
 - Run tests on chrome only
 ```
 polymer test -l chrome
