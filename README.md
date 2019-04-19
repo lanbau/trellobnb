@@ -1,5 +1,11 @@
 # Trellobnb
 
+# Structure & General Idea
+- Container Element Contains Column Elements
+- Container Elements Contains Card Elements
+- Modify Card/Column Events Will Be Done On Separate Forms
+- Drag & Drop is Data Driven: When card is dropped onto column target, previous and next columns are updated with data (no removal of dom nodes)
+
 # Quick Start
 ## Preinstallation For Polymer Test Suite
 1. npm install -g web-component-tester
